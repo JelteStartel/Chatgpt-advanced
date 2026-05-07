@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATELIER RUE — Artistieke Kleding Designer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: #f7f0e6;
+      color: #211d1a;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding: 18px 6vw;
+      background: rgba(247, 240, 230, 0.86);
+      border-bottom: 1px solid rgba(33, 29, 26, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .logo {
+      font-weight: 900;
+      letter-spacing: -1px;
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: #b46a4c;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6f665e;
+    }
+
+    .nav a:hover {
+      color: #b46a4c;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      place-items: center;
+      padding: 90px 6vw;
+      background:
+        linear-gradient(120deg, rgba(247, 240, 230, 0.82), rgba(247, 240, 230, 0.34)),
+        url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=80') center/cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 180px;
+      background: linear-gradient(transparent, #f7f0e6);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      width: 100%;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: #b46a4c;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.82rem;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 2px;
+      background: #b46a4c;
+    }
+
+    h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      max-width: 880px;
+      font-size: clamp(3.6rem, 11vw, 9.4rem);
+      line-height: 0.85;
+      letter-spacing: -4px;
+      text-transform: none;
+      text-shadow: 0 18px 50px rgba(80, 54, 36, 0.24);
+    }
+
+    .hero-text {
+      max-width: 620px;
+      margin-top: 28px;
+      color: #4c433c;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 48px;
+      padding: 13px 22px;
+      border: 1px solid #8b7a6c;
+      border-radius: 999px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.2s ease;
+    }
+
+    .button.primary {
+      background: #b46a4c;
+      border-color: #b46a4c;
+      color: #fffaf2;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    section {
+      padding: 92px 6vw;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 42px;
+    }
+
+    .section-label {
+      color: #b46a4c;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-family: Georgia, 'Times New Roman', serif;
+      margin-top: 10px;
+      font-size: clamp(2.2rem, 5vw, 5rem);
+      line-height: 0.92;
+      letter-spacing: -2px;
+      text-transform: none;
+    }
+
+    .lead {
+      color: #6f665e;
+      font-size: clamp(1rem, 1.7vw, 1.2rem);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 300px;
+      gap: 16px;
+    }
+
+    .gallery-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(33, 29, 26, 0.12);
+      background: #efe4d5;
+    }
+
+    .gallery-card.large {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery-card.wide {
+      grid-column: span 2;
+    }
+
+    .gallery-card::after {
+      content: attr(data-title);
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      padding: 8px 12px;
+      background: rgba(255, 250, 242, 0.86);
+      border: 1px solid rgba(180, 106, 76, 0.42);
+      color: #211d1a;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .philosophy {
+      background: #eadfce;
+      color: #211d1a;
+    }
+
+    .philosophy .lead {
+      color: #5d554e;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 38px;
+    }
+
+    .pillar {
+      min-height: 260px;
+      padding: 28px;
+      border: 1px solid rgba(9, 9, 9, 0.16);
+      background: rgba(255, 250, 242, 0.72);
+    }
+
+    .pillar-number {
+      color: #b46a4c;
+      font-weight: 900;
+      font-size: 0.85rem;
+    }
+
+    .pillar h3,
+    .story-card h3,
+    .designer-card h3 {
+      margin: 18px 0 12px;
+      font-size: 1.35rem;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    .story-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .story-image {
+      min-height: 620px;
+      border: 1px solid rgba(33, 29, 26, 0.12);
+      overflow: hidden;
+    }
+
+    .story-copy {
+      display: grid;
+      gap: 18px;
+    }
+
+    .story-card,
+    .designer-card {
+      padding: 30px;
+      border: 1px solid rgba(33, 29, 26, 0.12);
+      background: rgba(255, 250, 242, 0.76);
+      color: #5d554e;
+    }
+
+    .designer {
+      background:
+        radial-gradient(circle at 12% 20%, rgba(180, 106, 76, 0.16), transparent 28%),
+        #efe4d5;
+    }
+
+    .designer-profile {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .portrait {
+      min-height: 560px;
+      overflow: hidden;
+      border: 1px solid rgba(33, 29, 26, 0.12);
+      filter: saturate(86%) contrast(94%);
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .fact {
+      padding: 18px;
+      border: 1px solid rgba(33, 29, 26, 0.12);
+      background: rgba(255, 250, 242, 0.64);
+    }
+
+    .fact strong {
+      display: block;
+      color: #b46a4c;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      letter-spacing: 1px;
+    }
+
+    .collection {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .drop-card {
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 26px;
+      border: 1px solid rgba(33, 29, 26, 0.12);
+      background:
+        linear-gradient(transparent, rgba(33, 29, 26, 0.62)),
+        var(--image) center/cover;
+    }
+
+    .drop-card h3 {
+      font-size: 1.8rem;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .drop-card p {
+      margin-top: 10px;
+      color: #fffaf2;
+    }
+
+    .contact {
+      text-align: center;
+      background: #d9bea7;
+      color: #211d1a;
+    }
+
+    .contact h2 {
+      max-width: 900px;
+      margin: 0 auto 22px;
+    }
+
+    .contact p {
+      max-width: 620px;
+      margin: 0 auto 28px;
+      font-size: 1.15rem;
+    }
+
+    .contact .button {
+      border-color: #211d1a;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 28px 6vw;
+      background: #211d1a;
+      color: #d8cbbb;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .section-heading,
+      .story-layout,
+      .designer-profile,
+      .collection {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pillars {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      h1 {
+        letter-spacing: -3px;
+      }
+
+      section,
+      .hero {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .gallery-grid,
+      .facts {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-card,
+      .gallery-card.large,
+      .gallery-card.wide {
+        grid-column: span 1;
+        grid-row: span 1;
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="#home">ATELIER<span>RUE</span></a>
+    <nav class="nav" aria-label="Hoofdnavigatie">
+      <a href="#gallery">Galerij</a>
+      <a href="#philosophy">Filosofie</a>
+      <a href="#story">Verhaal</a>
+      <a href="#designer">Designer</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero" aria-label="Introductie">
+      <div class="hero-content">
+        <p class="eyebrow">Artistiek kledingatelier Amsterdam</p>
+        <h1>Draagbare kunst voor elke dag.</h1>
+        <p class="hero-text">ATELIER RUE ontwerpt kleding als zachte statements: sculpturale silhouetten, rustige kleuren, tactiele stoffen en handgemaakte details die meer galerie dan clubnacht voelen.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#gallery">Bekijk de galerie</a>
+          <a class="button" href="#story">Lees het verhaal</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">Galerij</p>
+          <h2>Een draagbare galerie</h2>
+        </div>
+        <p class="lead">Een rustige selectie van jassen, tops, broeken en limited pieces. De styling werkt met natuurlijk licht, textuur, gelaagde vormen en subtiele grafische accenten.</p>
+      </div>
+      <div class="gallery-grid">
+        <figure class="gallery-card large" data-title="Sculptural coat">
+          <img src="https://images.unsplash.com/photo-1506629905607-d9fb93cfef74?auto=format&fit=crop&w=900&q=80" alt="Model in sculpturale jas">
+        </figure>
+        <figure class="gallery-card" data-title="Soft volume top">
+          <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=700&q=80" alt="Model met zachte volumetop in stedelijke omgeving">
+        </figure>
+        <figure class="gallery-card" data-title="Textile study">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=80" alt="Artistieke styling met textieldetails">
+        </figure>
+        <figure class="gallery-card wide" data-title="Gallery silhouette">
+          <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=80" alt="Modefoto met artistieke gelaagde look">
+        </figure>
+        <figure class="gallery-card" data-title="Ink print tee">
+          <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=700&q=80" alt="Model met grafisch shirt en jas">
+        </figure>
+        <figure class="gallery-card" data-title="Atelier fitting">
+          <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&q=80" alt="Model tijdens een fashion fitting">
+        </figure>
+      </div>
+    </section>
+
+    <section id="philosophy" class="philosophy">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">Filosofie</p>
+          <h2>Kleding als canvas</h2>
+        </div>
+        <p class="lead">De collectie is ontworpen rond drie principes: kleding moet comfortabel bewegen, zorgvuldig gemaakt zijn en een artistieke signatuur dragen zonder hard te hoeven schreeuwen.</p>
+      </div>
+      <div class="pillars">
+        <article class="pillar">
+          <p class="pillar-number">01</p>
+          <h3>Vrij om te bewegen</h3>
+          <p>Luchtige pasvormen, zachte volumes en praktische details zorgen dat ieder stuk werkt in het atelier, op reis en tijdens rustige momenten in de stad.</p>
+        </article>
+        <article class="pillar">
+          <p class="pillar-number">02</p>
+          <h3>Poëtisch materiaal</h3>
+          <p>Contrasten bepalen de identiteit: linnen naast stevige katoen, zichtbare stiksels naast vloeiende lijnen, minimalisme naast schilderachtige prints.</p>
+        </article>
+        <article class="pillar">
+          <p class="pillar-number">03</p>
+          <h3>Bewuste oplages</h3>
+          <p>ATELIER RUE kiest voor beperkte producties, hergebruikte materialen waar mogelijk en stukken die niet na één seizoen verdwijnen.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="story" class="story">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">Het verhaal</p>
+          <h2>Van schetsboek naar salon</h2>
+        </div>
+        <p class="lead">Het label begon als een serie textielschetsen, gemaakt tussen museumbezoeken, atelierdagen en gesprekken met fotografen, dansers en makers.</p>
+      </div>
+      <div class="story-layout">
+        <div class="story-image">
+          <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?auto=format&fit=crop&w=1000&q=80" alt="Designer werkt aan kleding in atelier">
+        </div>
+        <div class="story-copy">
+          <article class="story-card">
+            <h3>De start</h3>
+            <p>Designer Mika Verlaan maakte eerst unieke jasjes en shirts als draagbare studies. Elk stuk droeg een fragment van zijn schetsboek: penseellijnen, zachte vouwen, imperfecte stiksels en subtiele typografie.</p>
+          </article>
+          <article class="story-card">
+            <h3>De doorbraak</h3>
+            <p>Na een intieme presentatie in een kleine galerie vond de eerste capsule snel zijn publiek. Sindsdien blijft het merk trouw aan dezelfde energie: persoonlijk, tactiel en dicht bij de creatieve community.</p>
+          </article>
+          <article class="story-card">
+            <h3>Vandaag</h3>
+            <p>ATELIER RUE werkt met lokale makers, fotografen en performers. Iedere collectie wordt gepresenteerd als een artistiek moment, niet alleen als een verkoopmoment.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="designer" class="designer">
+      <div class="designer-profile">
+        <div class="portrait">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80" alt="Portret van kledingdesigner Mika Verlaan">
+        </div>
+        <div>
+          <p class="section-label">Wie is de designer?</p>
+          <h2>Mika Verlaan</h2>
+          <p class="lead">Mika is een fictieve Amsterdamse kledingdesigner met een achtergrond in grafisch ontwerp, textielreparatie en hedendaagse kunst. Zijn werk draait om identiteit: hoe kleding je houding, tempo en aanwezigheid verandert.</p>
+          <div class="facts">
+            <div class="fact"><strong>Basis</strong>Amsterdam-Noord</div>
+            <div class="fact"><strong>Signatuur</strong>Sculpturale lagen, aardetinten</div>
+            <div class="fact"><strong>Inspiratie</strong>Schetsboeken, galerieën, dans</div>
+            <div class="fact"><strong>Doel</strong>Kleding die voelt als kunst</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="collection" class="drops">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">Capsules</p>
+          <h2>Nieuwe richtingen</h2>
+        </div>
+        <p class="lead">Drie capsulelijnen laten zien hoe het merk zich ontwikkelt: van zachte basics tot experimentele vormen en handmatige textielbewerkingen.</p>
+      </div>
+      <div class="collection">
+        <article class="drop-card" style="--image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=80');">
+          <h3>Stillness</h3>
+          <p>Zachte basics in zand, krijt en inkt met subtiele naden en comfortabele volumes.</p>
+        </article>
+        <article class="drop-card" style="--image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80');">
+          <h3>Canvas</h3>
+          <p>Schilderachtige prints, handgetekende lijnen en stoffen die bewegen als een doek.</p>
+        </article>
+        <article class="drop-card" style="--image: url('https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=900&q=80');">
+          <h3>Archive</h3>
+          <p>Herwerkte materialen, patchwork en zichtbare stiksels als ode aan kleding met geschiedenis.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Klaar voor een lookbook, expositie of custom collab?</h2>
+      <p>Gebruik deze platte HTML als basis voor een artistieke designerwebsite. Vervang de naam, teksten en foto's door echte content van de maker.</p>
+      <a class="button" href="mailto:studio@atelierrue.example">studio@atelierrue.example</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 ATELIER RUE Studio. Alle rechten voorbehouden.</p>
+    <p>Instagram / Portfolio / Lookbook / Expositie agenda</p>
+  </footer>
+</body>
+</html>
